@@ -29,9 +29,8 @@ PROJECT_VERSION=$(BASE_VERSION)
 endif
 
 # No sense rebuilding when non production code is changed
-PROJECT_FILES = $(shell git ls-files  | grep -v ^test | grep -v ^unit-test | \
-        grep -v ^bddtests | grep -v ^docs | grep -v _test.go$ | grep -v .md$ | \
-        grep -v ^.git | grep -v ^examples | grep -v ^devenv | grep -v .png$ | \
+PROJECT_FILES = $(shell git ls-files | \
+        grep -v _test.go$ | grep -v .md$ | grep -v ^.git | \
         grep -v ^LICENSE )
 
 EXECUTABLES = go git
