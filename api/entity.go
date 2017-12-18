@@ -18,10 +18,11 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
+	cerr "github.com/arxanchain/go-common/errors"
+	"github.com/arxanchain/go-common/rest"
 	restapi "github.com/arxanchain/go-common/rest/api"
 	"github.com/arxanchain/go-common/structs"
 )
@@ -55,7 +56,7 @@ func (t *EntityClient) CreateEntity(header http.Header, body *structs.EntityBody
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -86,7 +87,7 @@ func (t *EntityClient) UpdateEntity(header http.Header, id string, body *structs
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -123,7 +124,7 @@ func (t *EntityClient) QueryEntity(header http.Header, id string) (payload *stru
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 

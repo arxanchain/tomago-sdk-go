@@ -18,10 +18,11 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
+	cerr "github.com/arxanchain/go-common/errors"
+	"github.com/arxanchain/go-common/rest"
 	restapi "github.com/arxanchain/go-common/rest/api"
 	"github.com/arxanchain/go-common/structs"
 )
@@ -55,7 +56,7 @@ func (t *AssetClient) CreateAsset(header http.Header, body *structs.AssetBody) (
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -85,7 +86,7 @@ func (t *AssetClient) UpdateAsset(header http.Header, id string, body *structs.A
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -122,7 +123,7 @@ func (t *AssetClient) QueryAsset(header http.Header, id string) (payload *struct
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -158,7 +159,7 @@ func (t *AssetClient) TransferAsset(header http.Header, body *structs.TransferAs
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 

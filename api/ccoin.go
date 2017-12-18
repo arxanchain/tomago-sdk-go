@@ -17,9 +17,10 @@ limitations under the License.
 package api
 
 import (
-	"fmt"
 	"net/http"
 
+	cerr "github.com/arxanchain/go-common/errors"
+	"github.com/arxanchain/go-common/rest"
 	restapi "github.com/arxanchain/go-common/rest/api"
 	"github.com/arxanchain/go-common/structs"
 )
@@ -52,7 +53,7 @@ func (t *CCoinClient) Issue(header http.Header, body *structs.IssueBody) (result
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -83,7 +84,7 @@ func (t *CCoinClient) Transfer(header http.Header, body *structs.TransferBody) (
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -114,7 +115,7 @@ func (t *CCoinClient) Rollback(header http.Header, body *structs.RollbackBody) (
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -145,7 +146,7 @@ func (t *CCoinClient) Interest(header http.Header, body *structs.InterestBody) (
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
@@ -176,7 +177,7 @@ func (t *CCoinClient) Withdraw(header http.Header, body *structs.WithdrawBody) (
 	}
 
 	if result.Code != 0 {
-		err = fmt.Errorf("[%v] %v", result.Code, result.Message)
+		err = rest.CodedError(cerr.ErrCodeType(result.Code), result.Message)
 		return
 	}
 
