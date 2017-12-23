@@ -58,10 +58,7 @@ unit-test: gotools
 	@./scripts/goUnitTests.sh
 
 linter: gotools
-	@echo "LINT: Running code checks.."
-	@echo "Running go vet"
 	@./scripts/govet.sh
-	@echo "Running goimports"
 	@./scripts/goimports.sh
 
 .PHONY: clean
