@@ -21,10 +21,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	cerr "github.com/arxanchain/go-common/errors"
-	"github.com/arxanchain/go-common/rest"
-	restapi "github.com/arxanchain/go-common/rest/api"
-	"github.com/arxanchain/go-common/structs"
+	cerr "github.com/arxanchain/sdk-go-common/errors"
+	"github.com/arxanchain/sdk-go-common/rest"
+	restapi "github.com/arxanchain/sdk-go-common/rest/api"
+	"github.com/arxanchain/sdk-go-common/structs"
 )
 
 type AssetClient struct {

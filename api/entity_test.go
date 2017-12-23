@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/arxanchain/go-common/rest/api"
-	"github.com/arxanchain/go-common/structs"
+	"github.com/arxanchain/sdk-go-common/rest/api"
+	"github.com/arxanchain/sdk-go-common/structs"
 	gock "gopkg.in/h2non/gock.v1"
 )
 

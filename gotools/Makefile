@@ -26,6 +26,7 @@ go.fqp.goimports := golang.org/x/tools/cmd/goimports
 
 # project dependencies
 go.dep.gockv1    := gopkg.in/h2non/gock.v1
+go.dep.sdk-go-common := github.com/arxanchain/sdk-go-common/...
 
 all: $(GOTOOLS_BIN) dep
 
@@ -42,7 +43,9 @@ $(GOPATH)/bin/%:
 dep:
 	@echo "Downloading dependencies"
 	go get ${go.dep.gockv1}
+	go get -u ${go.dep.sdk-go-common}
 
 .PHONY: clean
 clean:
 	-@rm -f $(GOTOOLS_BIN) ||:
+

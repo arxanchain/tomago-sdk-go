@@ -17,8 +17,8 @@ limitations under the License.
 package api
 
 import (
-	restapi "github.com/arxanchain/go-common/rest/api"
-	"github.com/arxanchain/go-common/structs"
+	restapi "github.com/arxanchain/sdk-go-common/rest/api"
+	"github.com/arxanchain/sdk-go-common/structs"
 )
 
 type TomagoClient struct {
