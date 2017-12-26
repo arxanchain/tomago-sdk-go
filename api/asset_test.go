@@ -113,23 +113,11 @@ func TestCreateAssetFail(t *testing.T) {
 			"order_id": "678997"
 		}`,
 	}
-	payload := &structs.TomagoResponse{
-		Code:           0,
-		Message:        "",
-		Id:             id,
-		CoinId:         coinId,
-		TransactionIds: []string{""},
-	}
-	byPayload, err := json.Marshal(payload)
-	if err != nil {
-		t.Fatalf("%v", err)
-	}
 
 	//mock http request
 	gock.New("http://127.0.0.1:8003").
 		Post("/v2/assets").
-		Reply(401).
-		JSON(byPayload)
+		Reply(401)
 
 	//set http header
 	header := http.Header{}
@@ -279,22 +267,10 @@ func TestUpdateAssetFail(t *testing.T) {
 		id        = "did:ara:001"
 		mychannel = "dcc"
 	)
-	payload := &structs.TomagoResponse{
-		Code:           0,
-		Message:        "",
-		Id:             id,
-		CoinId:         "2222",
-		TransactionIds: []string{""},
-	}
-	byPayload, err := json.Marshal(payload)
-	if err != nil {
-		t.Fatalf("%v", err)
-	}
 
 	gock.New("http://127.0.0.1:8003").
 		Put("/v2/assets/zzz").
-		Reply(401).
-		JSON(byPayload)
+		Reply(401)
 	//set http header
 	header := http.Header{}
 	header.Set("Channel-Id", mychannel)
@@ -431,21 +407,10 @@ func TestQueryAssetFail(t *testing.T) {
 		id        = "did:ara:001"
 		mychannel = "dcc"
 	)
-	payload := &structs.TomagoResponse{
-		Code:           0,
-		Message:        "",
-		Id:             id,
-		CoinId:         "2222",
-		TransactionIds: []string{""},
-	}
-	byPayload, err := json.Marshal(payload)
-	if err != nil {
-		t.Fatalf("%v", err)
-	}
+
 	gock.New("http://127.0.0.1:8003").
 		Get("/v2/assets/zzz").
-		Reply(401).
-		JSON(byPayload)
+		Reply(401)
 	//set http header
 	header := http.Header{}
 	header.Set("Channel-Id", mychannel)
