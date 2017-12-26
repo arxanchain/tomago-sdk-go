@@ -21,6 +21,7 @@ import (
 	"github.com/arxanchain/sdk-go-common/structs"
 )
 
+// TomagoClient tomago client struct
 type TomagoClient struct {
 	c            *restapi.Client
 	entityClient *EntityClient
@@ -28,7 +29,7 @@ type TomagoClient struct {
 	ccoinClient  *CCoinClient
 }
 
-// TomagoClient returns a handle to the agent endpoints
+// NewTomagoClient returns a handle to the agent endpoints
 func NewTomagoClient(config *restapi.Config) (*TomagoClient, error) {
 	c, err := restapi.NewClient(config)
 	if err != nil {
@@ -37,6 +38,7 @@ func NewTomagoClient(config *restapi.Config) (*TomagoClient, error) {
 	return &TomagoClient{c: c}, nil
 }
 
+// GetEntityClient Get entity client
 func (t *TomagoClient) GetEntityClient() structs.IEntityClient {
 	if t.entityClient == nil {
 		t.entityClient = &EntityClient{c: t.c}
@@ -44,6 +46,7 @@ func (t *TomagoClient) GetEntityClient() structs.IEntityClient {
 	return t.entityClient
 }
 
+// GetAssetClient Get asset client
 func (t *TomagoClient) GetAssetClient() structs.IAssetClient {
 	if t.assetClient == nil {
 		t.assetClient = &AssetClient{c: t.c}
@@ -51,6 +54,7 @@ func (t *TomagoClient) GetAssetClient() structs.IAssetClient {
 	return t.assetClient
 }
 
+// GetCCoinClient Get colored coin client
 func (t *TomagoClient) GetCCoinClient() structs.ICCoinClient {
 	if t.ccoinClient == nil {
 		t.ccoinClient = &CCoinClient{c: t.c}

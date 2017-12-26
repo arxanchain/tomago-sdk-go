@@ -27,6 +27,7 @@ import (
 	"github.com/arxanchain/sdk-go-common/structs"
 )
 
+// EntityClient entity client struct
 type EntityClient struct {
 	c *restapi.Client
 }

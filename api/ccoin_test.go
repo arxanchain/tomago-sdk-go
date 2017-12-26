@@ -32,7 +32,7 @@ func TestIssueSucc(t *testing.T) {
 
 	const (
 		id     = "did:ara:001"
-		coinId = "33333"
+		coinID = "33333"
 	)
 
 	//request body & response body
@@ -44,7 +44,7 @@ func TestIssueSucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
@@ -70,8 +70,8 @@ func TestIssueSucc(t *testing.T) {
 	if resp == nil {
 		t.Fatalf("response should not be nil")
 	}
-	if resp.CoinId != coinId {
-		t.Fatalf("Coin Id should be %s, not %s", coinId, resp.CoinId)
+	if resp.CoinId != coinID {
+		t.Fatalf("Coin Id should be %s, not %s", coinID, resp.CoinId)
 	}
 }
 
@@ -82,7 +82,7 @@ func TestTransferSucc(t *testing.T) {
 
 	const (
 		id     = "did:ara:001"
-		coinId = "33333"
+		coinID = "33333"
 	)
 
 	//request body & response body
@@ -94,7 +94,7 @@ func TestTransferSucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
@@ -120,8 +120,8 @@ func TestTransferSucc(t *testing.T) {
 	if resp == nil {
 		t.Fatalf("response should not be nil")
 	}
-	if resp.CoinId != coinId {
-		t.Fatalf("Coin Id should be %s, not %s", coinId, resp.CoinId)
+	if resp.CoinId != coinID {
+		t.Fatalf("Coin Id should be %s, not %s", coinID, resp.CoinId)
 	}
 }
 
@@ -132,7 +132,7 @@ func TestRollbackSucc(t *testing.T) {
 
 	const (
 		id     = "did:ara:001"
-		coinId = "33333"
+		coinID = "33333"
 	)
 
 	//request body & response body
@@ -144,7 +144,7 @@ func TestRollbackSucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
@@ -170,8 +170,8 @@ func TestRollbackSucc(t *testing.T) {
 	if resp == nil {
 		t.Fatalf("response should not be nil")
 	}
-	if resp.CoinId != coinId {
-		t.Fatalf("Coin Id should be %s, not %s", coinId, resp.CoinId)
+	if resp.CoinId != coinID {
+		t.Fatalf("Coin Id should be %s, not %s", coinID, resp.CoinId)
 	}
 }
 
@@ -182,7 +182,7 @@ func TestInterestSucc(t *testing.T) {
 
 	const (
 		id     = "did:ara:001"
-		coinId = "33333"
+		coinID = "33333"
 	)
 
 	//request body & response body
@@ -194,7 +194,7 @@ func TestInterestSucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
@@ -220,8 +220,8 @@ func TestInterestSucc(t *testing.T) {
 	if resp == nil {
 		t.Fatalf("response should not be nil")
 	}
-	if resp.CoinId != coinId {
-		t.Fatalf("Coin Id should be %s, not %s", coinId, resp.CoinId)
+	if resp.CoinId != coinID {
+		t.Fatalf("Coin Id should be %s, not %s", coinID, resp.CoinId)
 	}
 }
 
@@ -232,7 +232,7 @@ func TestWithdrawSucc(t *testing.T) {
 
 	const (
 		id     = "did:ara:001"
-		coinId = "33333"
+		coinID = "33333"
 	)
 
 	//request body & response body
@@ -244,7 +244,7 @@ func TestWithdrawSucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
@@ -270,7 +270,7 @@ func TestWithdrawSucc(t *testing.T) {
 	if resp == nil {
 		t.Fatalf("response should not be nil")
 	}
-	if resp.CoinId != coinId {
-		t.Fatalf("Coin Id should be %s, not %s", coinId, resp.CoinId)
+	if resp.CoinId != coinID {
+		t.Fatalf("Coin Id should be %s, not %s", coinID, resp.CoinId)
 	}
 }

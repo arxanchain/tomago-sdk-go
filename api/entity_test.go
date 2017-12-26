@@ -32,7 +32,7 @@ func TestCreateEntitySucc(t *testing.T) {
 
 	const (
 		id     = "did:ara:001"
-		coinId = "33333"
+		coinID = "33333"
 	)
 
 	//request body & response body
@@ -50,7 +50,7 @@ func TestCreateEntitySucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
@@ -76,8 +76,8 @@ func TestCreateEntitySucc(t *testing.T) {
 	if resp == nil {
 		t.Fatalf("response should not be nil")
 	}
-	if resp.CoinId != coinId {
-		t.Fatalf("Coin Id should be %s, not %s", coinId, resp.CoinId)
+	if resp.CoinId != coinID {
+		t.Fatalf("Coin Id should be %s, not %s", coinID, resp.CoinId)
 	}
 }
 
@@ -88,7 +88,7 @@ func TestUpdateEntitySucc(t *testing.T) {
 
 	const (
 		id       = "did:ara:001"
-		coinId   = "33333"
+		coinID   = "33333"
 		entityID = "8e114136-e6f8-4dc0-8605-ad4f8a1e0d35"
 	)
 
@@ -107,7 +107,7 @@ func TestUpdateEntitySucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
@@ -133,8 +133,8 @@ func TestUpdateEntitySucc(t *testing.T) {
 	if resp == nil {
 		t.Fatalf("response should not be nil")
 	}
-	if resp.CoinId != coinId {
-		t.Fatalf("Coin Id should be %s, not %s", coinId, resp.CoinId)
+	if resp.CoinId != coinID {
+		t.Fatalf("Coin Id should be %s, not %s", coinID, resp.CoinId)
 	}
 }
 
@@ -145,7 +145,7 @@ func TestQueryEntitySucc(t *testing.T) {
 
 	const (
 		id       = "did:ara:001"
-		coinId   = "33333"
+		coinID   = "33333"
 		entityID = "8e114136-e6f8-4dc0-8605-ad4f8a1e0d35"
 	)
 
@@ -153,7 +153,7 @@ func TestQueryEntitySucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)

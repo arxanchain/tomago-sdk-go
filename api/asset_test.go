@@ -33,7 +33,7 @@ func TestCreateAssetSucc(t *testing.T) {
 
 	const (
 		id     = "did:ara:001"
-		coinId = "33333"
+		coinID = "33333"
 	)
 
 	//request body & response body
@@ -56,7 +56,7 @@ func TestCreateAssetSucc(t *testing.T) {
 		Code:           0,
 		Message:        "",
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
@@ -82,8 +82,8 @@ func TestCreateAssetSucc(t *testing.T) {
 	if resp == nil {
 		t.Fatalf("response should not be nil")
 	}
-	if resp.CoinId != coinId {
-		t.Fatalf("Coin Id should be %s, not %s", coinId, resp.CoinId)
+	if resp.CoinId != coinID {
+		t.Fatalf("Coin Id should be %s, not %s", coinID, resp.CoinId)
 	}
 }
 
@@ -94,7 +94,7 @@ func TestCreateAssetFail(t *testing.T) {
 
 	const (
 		id     = "did:ara:001"
-		coinId = "33333"
+		coinID = "33333"
 	)
 
 	//request body & response body
@@ -140,7 +140,7 @@ func TestCreateAssetErrCode(t *testing.T) {
 
 	const (
 		id      = "did:ara:001"
-		coinId  = "33333"
+		coinID  = "33333"
 		errCode = 5000
 		errMsg  = "Register Entity Fail"
 	)
@@ -165,7 +165,7 @@ func TestCreateAssetErrCode(t *testing.T) {
 		Code:           errCode,
 		Message:        errMsg,
 		Id:             id,
-		CoinId:         coinId,
+		CoinId:         coinID,
 		TransactionIds: []string{""},
 	}
 	byPayload, err := json.Marshal(payload)
