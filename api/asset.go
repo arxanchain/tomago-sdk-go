@@ -27,6 +27,7 @@ import (
 	"github.com/arxanchain/sdk-go-common/structs"
 )
 
+// AssetClient asset client struct
 type AssetClient struct {
 	c *restapi.Client
 }

@@ -25,6 +25,7 @@ import (
 	"github.com/arxanchain/sdk-go-common/structs"
 )
 
+// CCoinClient colored coin client struct
 type CCoinClient struct {
 	c *restapi.Client
 }
