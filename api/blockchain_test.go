@@ -187,3 +187,150 @@ func TestInvokeErrCode(t *testing.T) {
 		t.Fatalf("errCode should be %d, not %d", errCode, resp.Code)
 	}
 }
+
+func TestQuerySucc(t *testing.T) {
+	//init gock & assetclient
+	initBlockchainClient(t)
+	defer gock.Off()
+
+	const (
+		channel     = "channel001"
+		chaincodeID = "mycc"
+	)
+
+	//request body & response body
+	reqBody := &structs.PayloadWithTags{
+		Payload: &structs.ChaincodeRequest{
+			Channel:     channel,
+			ChaincodeID: chaincodeID,
+			Args:        []string{"query", "a"},
+		},
+	}
+	ret := &structs.ChaincodeResponse{
+		Result: "99",
+	}
+	byPayload, err := json.Marshal(ret)
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	//mock http request
+	gock.New("http://127.0.0.1:8003").
+		Post("/v2/blockchain/query").
+		Reply(200).
+		JSON(byPayload)
+
+	//set http header
+	header := http.Header{}
+	header.Set("Channel-Id", "dacc")
+
+	//do create blockchain
+	resp, err := chaincodeClient.Query(header, reqBody)
+	if err != nil {
+		t.Fatalf("create chaincode fail: %v", err)
+	}
+	if resp == nil {
+		t.Fatalf("response should not be nil")
+	}
+}
+
+func TestQueryFail(t *testing.T) {
+	//init gock & assetclient
+	initBlockchainClient(t)
+	defer gock.Off()
+
+	const (
+		channel     = "channel001"
+		chaincodeID = "mycc"
+	)
+
+	//request body & response body
+	reqBody := &structs.PayloadWithTags{
+		Payload: &structs.ChaincodeRequest{
+			Channel:     channel,
+			ChaincodeID: chaincodeID,
+			Args:        []string{"query", "a"},
+		},
+	}
+
+	//mock http request
+	gock.New("http://127.0.0.1:8003").
+		Post("/v2/blockchain/query").
+		Reply(401)
+
+	//set http header
+	header := http.Header{}
+	header.Set("Channel-Id", "dacc")
+
+	//do create blockchain
+	resp, err := chaincodeClient.Query(header, reqBody)
+	if err == nil {
+		t.Fatalf("query chaincode fail: %v", err)
+	}
+	if resp != nil {
+		t.Fatalf("response should not be nil")
+	}
+}
+
+func TestQueryErrCode(t *testing.T) {
+	//init gock & assetclient
+	initBlockchainClient(t)
+	defer gock.Off()
+
+	const (
+		channel     = "channel001"
+		chaincodeID = "mycc"
+		errCode     = 5000
+		errMsg      = "Query chaincode failed"
+	)
+
+	//request body & response body
+	reqBody := &structs.PayloadWithTags{
+		Payload: &structs.ChaincodeRequest{
+			Channel:     channel,
+			ChaincodeID: chaincodeID,
+			Args:        []string{"query", "a"},
+		},
+	}
+	payload := &structs.ChaincodeResponse{
+		Code:    errCode,
+		Message: errMsg,
+		Result:  "",
+	}
+	byPayload, err := json.Marshal(payload)
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	//mock http request
+	gock.New("http://127.0.0.1:8003").
+		Post("/v2/blockchain/query").
+		Reply(200).
+		JSON(byPayload)
+
+	//set http header
+	header := http.Header{}
+	header.Set("Channel-Id", "dacc")
+
+	//do create blockchain
+	resp, err := chaincodeClient.Query(header, reqBody)
+	if err == nil {
+		t.Fatalf("Start query chaincode fail err should not be nil")
+	}
+	errWitherrCode, ok := err.(rest.HTTPCodedError)
+	if !ok {
+		t.Fatalf("err should be HTTPCodedError")
+	}
+
+	if errWitherrCode.Code() != errCode {
+		t.Fatalf("err Code should be %d, not %d", errCode, errWitherrCode.Code())
+	}
+
+	if errWitherrCode.Error() != errMsg {
+		t.Fatalf("errMsg should be %s, not %s", errMsg, errWitherrCode.Error())
+	}
+
+	if resp.Code != errCode {
+		t.Fatalf("errCode should be %d, not %d", errCode, resp.Code)
+	}
+}
