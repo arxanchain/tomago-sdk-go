@@ -1,5 +1,5 @@
 /*
-Copyright ArxanFintech Technology Ltd. 2017 All Rights Reserved.
+Copyright ArxanFintech Technology Ltd. 2017-2018 All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,10 +23,11 @@ import (
 
 // TomagoClient tomago client struct
 type TomagoClient struct {
-	c            *restapi.Client
-	entityClient *EntityClient
-	assetClient  *AssetClient
-	ccoinClient  *CCoinClient
+	c                *restapi.Client
+	entityClient     *EntityClient
+	assetClient      *AssetClient
+	ccoinClient      *CCoinClient
+	blockchainClient *BlockchainClient
 }
 
 // NewTomagoClient returns a handle to the agent endpoints
@@ -60,4 +61,12 @@ func (t *TomagoClient) GetCCoinClient() structs.ICCoinClient {
 		t.ccoinClient = &CCoinClient{c: t.c}
 	}
 	return t.ccoinClient
+}
+
+// GetBlockchainClient Get blockchain client
+func (t *TomagoClient) GetBlockchainClient() structs.IBlockchainClient {
+	if t.blockchainClient == nil {
+		t.blockchainClient = &BlockchainClient{c: t.c}
+	}
+	return t.blockchainClient
 }
