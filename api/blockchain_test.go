@@ -333,3 +333,131 @@ func TestQueryErrCode(t *testing.T) {
 		t.Fatalf("errCode should be %d, not %d", errCode, resp.Code)
 	}
 }
+
+func TestQueryTxnSucc(t *testing.T) {
+	//init gock & assetclient
+	initBlockchainClient(t)
+	defer gock.Off()
+
+	const (
+		txid = "mycc"
+	)
+
+	//request body & response body
+	ret := &structs.TransactionResponse{
+		ChannelID:     "mychannel",
+		ChaincodeID:   "mycc",
+		TransactionID: "991d9f7658cb6515af4467c74842593158cf99b09c744f6d6137f751436707f9",
+		Timestamp:     structs.Timestamp{Seconds: 1502867427, Nanos: 239380560},
+		CreatorID:     []byte("CgdPcmcxTVNQEq4GLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNMRENDQWRLZ0F3SUJBZ0lSQUtaSGhlQ1pQRStHTUxSVjJXWEJyMTB3Q2dZSUtvWkl6ajBFQXdJd2NERUwKTUFrR0ExVUVCaE1DVlZNeEV6QVJCZ05WQkFnVENrTmhiR2xtYjNKdWFXRXhGakFVQmdOVkJBY1REVk5oYmlCRwpjbUZ1WTJselkyOHhHVEFYQmdOVkJBb1RFRzl5WnpFdVpYaGhiWEJzWlM1amIyMHhHVEFYQmdOVkJBTVRFRzl5Clp6RXVaWGhoYlhCc1pTNWpiMjB3SGhjTk1UY3dOREl5TVRJd01qVTJXaGNOTWpjd05ESXdNVEl3TWpVMldqQmIKTVFzd0NRWURWUVFHRXdKVlV6RVRNQkVHQTFVRUNCTUtRMkZzYVdadmNtNXBZVEVXTUJRR0ExVUVCeE1OVTJGdQpJRVp5WVc1amFYTmpiekVmTUIwR0ExVUVBd3dXVlhObGNqRkFiM0puTVM1bGVHRnRjR3hsTG1OdmJUQlpNQk1HCkJ5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCRlVLdU5DbGl3VjlFNHRtU2JXV2QzdHYvNFpFNms0Q0dJaVkKYUtOSmpIWUk2WVZqbFRNRWwyTnJzU1djT01aMWF5cys5eEoyRXdqc1F2RGFpWkJuSlBlallqQmdNQTRHQTFVZApEd0VCL3dRRUF3SUZvREFUQmdOVkhTVUVEREFLQmdnckJnRUZCUWNEQVRBTUJnTlZIUk1CQWY4RUFqQUFNQ3NHCkExVWRJd1FrTUNLQUlLSXRyelZyS3F0WGt1cFQ0MTltL003eDEvR3FLem9ya3R2NytXcEVqcUpxTUFvR0NDcUcKU000OUJBTUNBMGdBTUVVQ0lRRDNoc0hTMURTOU94N3RxNDZwN3gwUVdQOXljKytNN1hBN1BSZjhMN3dYL1FJZwpVMExkSVhKcmh4QVhYMjl0Qy9xRzJRR1BBNFQ1UVRDS1paY1ZOYUFUL0xRPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg"),
+		PayloadSize:   1881,
+		IsInvalID:     false,
+		Payload:       "",
+	}
+	byPayload, err := json.Marshal(ret)
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	//mock http request
+	gock.New("http://127.0.0.1:8003").
+		Get("/v2/blockchain/transaction/" + txid).
+		Reply(200).
+		JSON(byPayload)
+
+	//set http header
+	header := http.Header{}
+	header.Set("Channel-Id", "dacc")
+
+	//do create blockchain
+	resp, err := chaincodeClient.QueryTxn(header, txid)
+	if err != nil {
+		t.Fatalf("query transaction fail: %v", err)
+	}
+	if resp == nil {
+		t.Fatalf("response should not be nil")
+	}
+}
+
+func TestQueryTxnFail(t *testing.T) {
+	//init gock & assetclient
+	initBlockchainClient(t)
+	defer gock.Off()
+
+	const (
+		txid = "mycc"
+	)
+
+	//mock http request
+	gock.New("http://127.0.0.1:8003").
+		Get("/v2/blockchain/" + txid).
+		Reply(401)
+
+	//set http header
+	header := http.Header{}
+	header.Set("Channel-Id", "dacc")
+
+	//do create blockchain
+	resp, err := chaincodeClient.QueryTxn(header, txid)
+	if err == nil {
+		t.Fatalf("query chaincode transaction fail: %v", err)
+	}
+	if resp != nil {
+		t.Fatalf("response should not be nil")
+	}
+}
+
+func TestQueryTxnErrCode(t *testing.T) {
+	//init gock & assetclient
+	initBlockchainClient(t)
+	defer gock.Off()
+
+	const (
+		txid    = "mycc"
+		errCode = 5000
+		errMsg  = "Query Transaction failed"
+	)
+
+	//request body & response body
+	payload := &structs.ChaincodeResponse{
+		Result:  "",
+		Code:    errCode,
+		Message: errMsg,
+	}
+	byPayload, err := json.Marshal(payload)
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	//mock http request
+	gock.New("http://127.0.0.1:8003").
+		Get("/v2/blockchain/transaction/" + txid).
+		Reply(200).
+		JSON(byPayload)
+
+	//set http header
+	header := http.Header{}
+	header.Set("Channel-Id", "dacc")
+
+	//do create blockchain
+	resp, err := chaincodeClient.QueryTxn(header, txid)
+	if err == nil {
+		t.Fatalf("Start query transaction fail err should not be nil")
+	}
+	errWitherrCode, ok := err.(rest.HTTPCodedError)
+	if !ok {
+		t.Fatalf("err should be HTTPCodedError")
+	}
+
+	if errWitherrCode.Code() != errCode {
+		t.Fatalf("err Code should be %d, not %d", errCode, errWitherrCode.Code())
+	}
+
+	if errWitherrCode.Error() != errMsg {
+		t.Fatalf("errMsg should be %s, not %s", errMsg, errWitherrCode.Error())
+	}
+
+	if resp.Code != errCode {
+		t.Fatalf("errCode should be %d, not %d", errCode, resp.Code)
+	}
+}
