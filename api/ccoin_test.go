@@ -18,7 +18,12 @@ func initCcoinClient(t *testing.T) {
 	client := &http.Client{Transport: &http.Transport{}}
 	gock.InterceptClient(client)
 
-	tomagoClient, err := NewTomagoClient(&api.Config{Address: "http://127.0.0.1:8003", HttpClient: client})
+	config := &api.Config{
+		Address:    "http://127.0.0.1:8003",
+		ApiKey:     "xxxxxxxxxxxxx",
+		HttpClient: client,
+	}
+	tomagoClient, err := NewTomagoClient(config)
 	if err != nil {
 		t.Fatalf("New tomago client fail: %v", err)
 	}
@@ -36,10 +41,7 @@ func TestIssueSucc(t *testing.T) {
 	)
 
 	//request body & response body
-	reqBody := &structs.IssueBody{
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-	}
+	reqBody := &structs.IssueBody{}
 	payload := &structs.TomagoResponse{
 		Code:           0,
 		Message:        "",
@@ -61,6 +63,7 @@ func TestIssueSucc(t *testing.T) {
 	//set http header
 	header := http.Header{}
 	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := ccoinClient.Issue(header, reqBody)
@@ -86,10 +89,7 @@ func TestTransferSucc(t *testing.T) {
 	)
 
 	//request body & response body
-	reqBody := &structs.TransferBody{
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-	}
+	reqBody := &structs.TransferBody{}
 	payload := &structs.TomagoResponse{
 		Code:           0,
 		Message:        "",
@@ -111,6 +111,7 @@ func TestTransferSucc(t *testing.T) {
 	//set http header
 	header := http.Header{}
 	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := ccoinClient.Transfer(header, reqBody)
@@ -136,10 +137,7 @@ func TestRollbackSucc(t *testing.T) {
 	)
 
 	//request body & response body
-	reqBody := &structs.RollbackBody{
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-	}
+	reqBody := &structs.RollbackBody{}
 	payload := &structs.TomagoResponse{
 		Code:           0,
 		Message:        "",
@@ -161,6 +159,7 @@ func TestRollbackSucc(t *testing.T) {
 	//set http header
 	header := http.Header{}
 	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := ccoinClient.Rollback(header, reqBody)
@@ -186,10 +185,7 @@ func TestInterestSucc(t *testing.T) {
 	)
 
 	//request body & response body
-	reqBody := &structs.InterestBody{
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-	}
+	reqBody := &structs.InterestBody{}
 	payload := &structs.TomagoResponse{
 		Code:           0,
 		Message:        "",
@@ -211,6 +207,7 @@ func TestInterestSucc(t *testing.T) {
 	//set http header
 	header := http.Header{}
 	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := ccoinClient.Interest(header, reqBody)
@@ -236,10 +233,7 @@ func TestWithdrawSucc(t *testing.T) {
 	)
 
 	//request body & response body
-	reqBody := &structs.WithdrawBody{
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-	}
+	reqBody := &structs.WithdrawBody{}
 	payload := &structs.TomagoResponse{
 		Code:           0,
 		Message:        "",
@@ -261,6 +255,7 @@ func TestWithdrawSucc(t *testing.T) {
 	//set http header
 	header := http.Header{}
 	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := ccoinClient.Withdraw(header, reqBody)

@@ -34,7 +34,12 @@ func initBlockchainClient(t *testing.T) {
 	client := &http.Client{Transport: &http.Transport{}}
 	gock.InterceptClient(client)
 
-	tomagoClient, err := NewTomagoClient(&api.Config{Address: "http://127.0.0.1:8003", HttpClient: client})
+	config := &api.Config{
+		Address:    "http://127.0.0.1:8003",
+		ApiKey:     "xxxxxxxxxxxxx",
+		HttpClient: client,
+	}
+	tomagoClient, err := NewTomagoClient(config)
 	if err != nil {
 		t.Fatalf("New tomago client fail: %v", err)
 	}
@@ -54,7 +59,6 @@ func TestInvokeAssetSucc(t *testing.T) {
 	//request body & response body
 	reqBody := &structs.PayloadWithTags{
 		Payload: &structs.ChaincodeRequest{
-			Channel:     channel,
 			ChaincodeID: chaincodeID,
 			Args:        []string{"invoke", "a", "b", "1"},
 		},
@@ -75,7 +79,7 @@ func TestInvokeAssetSucc(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Channel-Id", channel)
 
 	//do create blockchain
 	resp, err := chaincodeClient.Invoke(header, reqBody)
@@ -100,7 +104,6 @@ func TestInvokeAssetFail(t *testing.T) {
 	//request body & response body
 	reqBody := &structs.PayloadWithTags{
 		Payload: &structs.ChaincodeRequest{
-			Channel:     channel,
 			ChaincodeID: chaincodeID,
 			Args:        []string{"invoke", "a", "b", "1"},
 		},
@@ -113,7 +116,7 @@ func TestInvokeAssetFail(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Channel-Id", channel)
 
 	//do create blockchain
 	resp, err := chaincodeClient.Invoke(header, reqBody)
@@ -140,7 +143,6 @@ func TestInvokeErrCode(t *testing.T) {
 	//request body & response body
 	reqBody := &structs.PayloadWithTags{
 		Payload: &structs.ChaincodeRequest{
-			Channel:     channel,
 			ChaincodeID: chaincodeID,
 			Args:        []string{"invoke", "a", "b", "1"},
 		},
@@ -163,7 +165,7 @@ func TestInvokeErrCode(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Channel-Id", channel)
 
 	//do create blockchain
 	resp, err := chaincodeClient.Invoke(header, reqBody)
@@ -201,7 +203,6 @@ func TestQuerySucc(t *testing.T) {
 	//request body & response body
 	reqBody := &structs.PayloadWithTags{
 		Payload: &structs.ChaincodeRequest{
-			Channel:     channel,
 			ChaincodeID: chaincodeID,
 			Args:        []string{"query", "a"},
 		},
@@ -222,7 +223,7 @@ func TestQuerySucc(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Channel-Id", channel)
 
 	//do create blockchain
 	resp, err := chaincodeClient.Query(header, reqBody)
@@ -247,7 +248,6 @@ func TestQueryFail(t *testing.T) {
 	//request body & response body
 	reqBody := &structs.PayloadWithTags{
 		Payload: &structs.ChaincodeRequest{
-			Channel:     channel,
 			ChaincodeID: chaincodeID,
 			Args:        []string{"query", "a"},
 		},
@@ -260,7 +260,7 @@ func TestQueryFail(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Channel-Id", channel)
 
 	//do create blockchain
 	resp, err := chaincodeClient.Query(header, reqBody)
@@ -287,7 +287,6 @@ func TestQueryErrCode(t *testing.T) {
 	//request body & response body
 	reqBody := &structs.PayloadWithTags{
 		Payload: &structs.ChaincodeRequest{
-			Channel:     channel,
 			ChaincodeID: chaincodeID,
 			Args:        []string{"query", "a"},
 		},
@@ -310,7 +309,7 @@ func TestQueryErrCode(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Channel-Id", channel)
 
 	//do create blockchain
 	resp, err := chaincodeClient.Query(header, reqBody)
