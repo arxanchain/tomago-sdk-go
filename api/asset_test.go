@@ -19,7 +19,12 @@ func initAssetClient(t *testing.T) {
 	client := &http.Client{Transport: &http.Transport{}}
 	gock.InterceptClient(client)
 
-	tomagoClient, err := NewTomagoClient(&api.Config{Address: "http://127.0.0.1:8003", HttpClient: client})
+	config := &api.Config{
+		Address:    "http://127.0.0.1:8003",
+		ApiKey:     "xxxxxxxxxxxxx",
+		HttpClient: client,
+	}
+	tomagoClient, err := NewTomagoClient(config)
 	if err != nil {
 		t.Fatalf("New tomago client fail: %v", err)
 	}
@@ -38,14 +43,12 @@ func TestCreateAssetSucc(t *testing.T) {
 
 	//request body & response body
 	reqBody := &structs.AssetBody{
-		Id:           id,
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-		Name:         "票据001",
-		Hash:         "sajfskjdfsdjfsdjfsj12923932kdfjds",
-		ParentId:     "9867900-shdfjk",
-		Owner:        "dd37fb3b-79d8-405e-8292-916de58d8663",
-		ExpireTime:   10,
+		Id:         id,
+		Name:       "票据001",
+		Hash:       "sajfskjdfsdjfsdjfsj12923932kdfjds",
+		ParentId:   "9867900-shdfjk",
+		Owner:      "dd37fb3b-79d8-405e-8292-916de58d8663",
+		ExpireTime: 10,
 		Metadata: `{
 			"name": "Army",
 			"type": 1,
@@ -72,7 +75,7 @@ func TestCreateAssetSucc(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := assetClient.CreateAsset(header, reqBody)
@@ -99,14 +102,12 @@ func TestCreateAssetFail(t *testing.T) {
 
 	//request body & response body
 	reqBody := &structs.AssetBody{
-		Id:           id,
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-		Name:         "票据001",
-		Hash:         "sajfskjdfsdjfsdjfsj12923932kdfjds",
-		ParentId:     "9867900-shdfjk",
-		Owner:        "dd37fb3b-79d8-405e-8292-916de58d8663",
-		ExpireTime:   10,
+		Id:         id,
+		Name:       "票据001",
+		Hash:       "sajfskjdfsdjfsdjfsj12923932kdfjds",
+		ParentId:   "9867900-shdfjk",
+		Owner:      "dd37fb3b-79d8-405e-8292-916de58d8663",
+		ExpireTime: 10,
 		Metadata: `{
 			"name": "Army",
 			"type": 1,
@@ -121,7 +122,7 @@ func TestCreateAssetFail(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := assetClient.CreateAsset(header, reqBody)
@@ -147,14 +148,12 @@ func TestCreateAssetErrCode(t *testing.T) {
 
 	//request body & response body
 	reqBody := &structs.AssetBody{
-		Id:           id,
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-		Name:         "票据001",
-		Hash:         "sajfskjdfsdjfsdjfsj12923932kdfjds",
-		ParentId:     "9867900-shdfjk",
-		Owner:        "dd37fb3b-79d8-405e-8292-916de58d8663",
-		ExpireTime:   10,
+		Id:         id,
+		Name:       "票据001",
+		Hash:       "sajfskjdfsdjfsdjfsj12923932kdfjds",
+		ParentId:   "9867900-shdfjk",
+		Owner:      "dd37fb3b-79d8-405e-8292-916de58d8663",
+		ExpireTime: 10,
 		Metadata: `{
 			"name": "Army",
 			"type": 1,
@@ -181,7 +180,7 @@ func TestCreateAssetErrCode(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := assetClient.CreateAsset(header, reqBody)
@@ -231,16 +230,14 @@ func TestUpdateAssetSucc(t *testing.T) {
 		JSON(byPayload)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 	reqBody := &structs.AssetBody{
-		Id:           id,
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-		Name:         "票据001",
-		Hash:         "sajfskjdfsdjfsdjfsj12923932kdfjds",
-		ParentId:     "9867900-shdfjk",
-		Owner:        "dd37fb3b-79d8-405e-8292-916de58d8663",
-		ExpireTime:   10,
+		Id:         id,
+		Name:       "票据001",
+		Hash:       "sajfskjdfsdjfsdjfsj12923932kdfjds",
+		ParentId:   "9867900-shdfjk",
+		Owner:      "dd37fb3b-79d8-405e-8292-916de58d8663",
+		ExpireTime: 10,
 		Metadata: `{
 			"name": "Army",
 			"type": 1,
@@ -273,16 +270,14 @@ func TestUpdateAssetFail(t *testing.T) {
 		Reply(401)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 	reqBody := &structs.AssetBody{
-		Id:           id,
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-		Name:         "票据001",
-		Hash:         "sajfskjdfsdjfsdjfsj12923932kdfjds",
-		ParentId:     "9867900-shdfjk",
-		Owner:        "dd37fb3b-79d8-405e-8292-916de58d8663",
-		ExpireTime:   10,
+		Id:         id,
+		Name:       "票据001",
+		Hash:       "sajfskjdfsdjfsdjfsj12923932kdfjds",
+		ParentId:   "9867900-shdfjk",
+		Owner:      "dd37fb3b-79d8-405e-8292-916de58d8663",
+		ExpireTime: 10,
 		Metadata: `{
 			"name": "Army",
 			"type": 1,
@@ -326,16 +321,14 @@ func TestUpdateAssetErrCode(t *testing.T) {
 		JSON(byPayload)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 	reqBody := &structs.AssetBody{
-		Id:           id,
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
-		Name:         "票据001",
-		Hash:         "sajfskjdfsdjfsdjfsj12923932kdfjds",
-		ParentId:     "9867900-shdfjk",
-		Owner:        "dd37fb3b-79d8-405e-8292-916de58d8663",
-		ExpireTime:   10,
+		Id:         id,
+		Name:       "票据001",
+		Hash:       "sajfskjdfsdjfsdjfsj12923932kdfjds",
+		ParentId:   "9867900-shdfjk",
+		Owner:      "dd37fb3b-79d8-405e-8292-916de58d8663",
+		ExpireTime: 10,
 		Metadata: `{
 			"name": "Army",
 			"type": 1,
@@ -389,7 +382,6 @@ func TestQueryAssetSucc(t *testing.T) {
 		JSON(byPayload)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
 	resp, err := assetClient.QueryAsset(header, "zzz")
 	if err != nil {
 		t.Fatalf("create asset fail: %v", err)
@@ -413,7 +405,6 @@ func TestQueryAssetFail(t *testing.T) {
 		Reply(401)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
 	resp, err := assetClient.QueryAsset(header, "zzz")
 	if err == nil {
 		t.Fatalf("query asset fail err should not be nil")
@@ -450,7 +441,6 @@ func TestQueryAssetErrCode(t *testing.T) {
 		JSON(byPayload)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
 	_, err = assetClient.QueryAsset(header, "zzz")
 	if err == nil {
 		t.Fatalf("query asset fail err should not be nil")
@@ -499,14 +489,12 @@ func TestTransferAssetSucc(t *testing.T) {
 		JSON(byPayload)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
+	header.Set("Callback-Url", "zzz")
 	reqBody := &structs.TransferAssetBody{
-		EnrollmentId: "alice",
-		CallbackUrl:  "zz",
-		From:         "ss",
-		To:           "xx",
-		Assets:       []string{""},
-		Fees:         nil,
+		From:   "ss",
+		To:     "xx",
+		Assets: []string{""},
+		Fees:   nil,
 	}
 	resp, err := assetClient.TransferAsset(header, reqBody)
 	if err != nil {
@@ -545,14 +533,12 @@ func TestTransferAssetFail(t *testing.T) {
 		JSON(byPayload)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
+	header.Set("Callback-Url", "zzz")
 	reqBody := &structs.TransferAssetBody{
-		EnrollmentId: "alice",
-		CallbackUrl:  "zz",
-		From:         "ss",
-		To:           "xx",
-		Assets:       []string{""},
-		Fees:         nil,
+		From:   "ss",
+		To:     "xx",
+		Assets: []string{""},
+		Fees:   nil,
 	}
 	resp, err := assetClient.TransferAsset(header, reqBody)
 	if err != nil {
@@ -593,14 +579,12 @@ func TestTransferAssetErrCode(t *testing.T) {
 		JSON(byPayload)
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", mychannel)
+	header.Set("Callback-Url", "zzz")
 	reqBody := &structs.TransferAssetBody{
-		EnrollmentId: "alice",
-		CallbackUrl:  "zz",
-		From:         "ss",
-		To:           "xx",
-		Assets:       []string{""},
-		Fees:         nil,
+		From:   "ss",
+		To:     "xx",
+		Assets: []string{""},
+		Fees:   nil,
 	}
 	resp, err := assetClient.TransferAsset(header, reqBody)
 	if err == nil {

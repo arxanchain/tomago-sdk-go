@@ -18,7 +18,12 @@ func initEntityClient(t *testing.T) {
 	client := &http.Client{Transport: &http.Transport{}}
 	gock.InterceptClient(client)
 
-	tomagoClient, err := NewTomagoClient(&api.Config{Address: "http://127.0.0.1:8003", HttpClient: client})
+	config := &api.Config{
+		Address:    "http://127.0.0.1:8003",
+		ApiKey:     "xxxxxxxxxxxxx",
+		HttpClient: client,
+	}
+	tomagoClient, err := NewTomagoClient(config)
 	if err != nil {
 		t.Fatalf("New tomago client fail: %v", err)
 	}
@@ -37,9 +42,7 @@ func TestCreateEntitySucc(t *testing.T) {
 
 	//request body & response body
 	reqBody := &structs.EntityBody{
-		Id:           id,
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
+		Id: id,
 		Metadata: `{
 			"name": "Army",
 			"type": 1,
@@ -66,7 +69,7 @@ func TestCreateEntitySucc(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := entityClient.CreateEntity(header, reqBody)
@@ -94,9 +97,7 @@ func TestUpdateEntitySucc(t *testing.T) {
 
 	//request body & response body
 	reqBody := &structs.EntityBody{
-		Id:           id,
-		EnrollmentId: "alice",
-		CallbackUrl:  "http://172.16.199.6:8091/v2/test",
+		Id: id,
 		Metadata: `{
 			"name": "Army",
 			"type": 1,
@@ -123,7 +124,7 @@ func TestUpdateEntitySucc(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
+	header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
 	//do create asset
 	resp, err := entityClient.UpdateEntity(header, entityID, reqBody)
@@ -169,7 +170,6 @@ func TestQueryEntitySucc(t *testing.T) {
 
 	//set http header
 	header := http.Header{}
-	header.Set("Channel-Id", "dacc")
 
 	//do create asset
 	resp, err := entityClient.QueryEntity(header, entityID)
