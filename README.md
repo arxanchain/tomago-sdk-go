@@ -28,7 +28,7 @@ BaaS Platform via Tomago.
 Run following command to download Go SDK
 
 ```code
-go get github.com/arxanchain/tomago-sdk-go
+go get github.com/arxanchain/tomago-sdk-go/api
 ```
 
 ## Request APIKey and download certificates
