@@ -17,6 +17,8 @@ limitations under the License.
 package api
 
 import (
+	"fmt"
+
 	restapi "github.com/arxanchain/sdk-go-common/rest/api"
 	"github.com/arxanchain/sdk-go-common/structs"
 )
@@ -32,6 +34,13 @@ type TomagoClient struct {
 
 // NewTomagoClient returns a handle to the agent endpoints
 func NewTomagoClient(config *restapi.Config) (*TomagoClient, error) {
+	if config == nil {
+		return nil, fmt.Errorf("config must be set")
+	}
+	if config.RouteTag == "" {
+		config.RouteTag = "tomago"
+	}
+
 	c, err := restapi.NewClient(config)
 	if err != nil {
 		return nil, err
