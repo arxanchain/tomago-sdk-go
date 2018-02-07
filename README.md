@@ -86,7 +86,7 @@ tomagoClient, err := NewTomagoClient(config)
       }`,
   }
 
-  //set Channel Id
+  //set Http header
   header := http.Header{}
   header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
 
