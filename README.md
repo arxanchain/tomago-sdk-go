@@ -70,109 +70,6 @@ tomagoClient, err := NewTomagoClient(config)
 * Address - The Tomago Service API URL, we support http and https both
 * ApiKey - We assume the ApiKey for your request is "6fD9G0QpM1516158053"
 
-## Issue digital assets
-
-* Before issuing a digital asset, we need to create the owner of this asset
-  first. Here we call that an entity.
-
-  ```code
-  entityClient := tomagoClient.GetEntityClient()
-  reqBody := &structs.EntityBody{
-      Id:           id,
-      Metadata: `{
-          "name": "Army",
-          "type": 1,
-          "order_id": "678997"
-      }`,
-  }
-
-  //set Http header
-  header := http.Header{}
-  header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
-
-  //do create asset
-  resp, err := entityClient.CreateEntity(header, reqBody)
-
-  ```
-
-  - CallbackUrl: Asynchronous event notification which will notify if the
-    request succeeded or failed
-  - Id: The entity ID, Tomago will generated a UUID if you do not provide this
-
-* Issue a digital asset
-
-  ```code
-  assetClient = tomagoClient.GetAssetClient()
-
-  //request body & response body
-  reqBody := &structs.AssetBody{
-      Id:           id,
-      Name:         "bill001",
-      Owner:        "did:axn:8uQhQMGzWxR8vw5P3UWH1j",
-      Metadata: `{
-          "name": "Army",
-          "type": 1,
-          "order_id": "678997"
-      }`,
-  }
-  //set http header
-  header := http.Header{}
-  header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
-
-  //do create asset
-  resp, err := assetClient.CreateAsset(header, reqBody)
-
-  ```
-
-  - CallbackUrl: Asynchronous event notification which will notify if the
-    request succeeded or failed
-  - Id: The asset ID, Tomago will generated a UUID if you do not provide this
-  - Owner: The Entity ID of the asset owner
-
-* Update a digital asset
-
-  ```code
-  assetClient = tomagoClient.GetAssetClient()
-
-  //request body & response body
-  reqBody := &structs.AssetBody{
-      Name:       "bill002",
-      ParentId:   "xxxxxx",
-      Metadata: `{
-          "name": "Army",
-          "type": 2,
-          "order_id": "678997"
-      }`,
-  }
-  //set http header
-  header := http.Header{}
-  header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
-
-  //do update asset
-  resp, err := assetClient.UpdateAsset(header, "did:axn:f9zG01pp1516158024xxe1", reqBody)
-  ```
-
-  - We only allow updates of the Name, ParentId and Metadata of asset
-
-* Transfer a digital asset
-
-  ```code
-  assetClient = tomagoClient.GetAssetClient()
-
-  reqBody := &structs.TransferAssetBody{
-      From:   "did:axn:ss",
-      To:     "did:axn:xx",
-      Assets: []string{""},
-      Fees:   nil,
-  }
-  //set http header
-  header := http.Header{}
-  header.Set("Callback-Url", "http://172.16.199.6:8091/v2/test")
-
-  //do transfer asset
-  resp, err := assetClient.TransferAsset(header, reqBody)
-  ```
-
 ## Invoke the SmartContract deployed by yourself
 
 After you publish a chaincode into production blockchain environment, you can
@@ -226,6 +123,10 @@ use following APIs to invoke or query your chaincode.
   resp, err := chaincodeClient.Query(header, reqBody)
   ```
 
+## Issue digital assets
+
+Deprecated, asset mgmt related APIs have been moved into wallet-sdk-go
+
 ## Colored Coin
 
-Deprecated, colored coin will be moved into wallet-sdk-go
+Deprecated, colored coin has been moved into wallet-sdk-go

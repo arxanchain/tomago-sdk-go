@@ -28,6 +28,7 @@ import (
 )
 
 // EntityClient entity client struct
+// Deprecated: This Client has been deprecated, use wallet in wallet-sdk instead
 type EntityClient struct {
 	c *restapi.Client
 }
@@ -41,6 +42,7 @@ type EntityClient struct {
 //     TransactionIds: blockchain transaction id list, this api returns one transaction id
 //   err: create entity succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use Register in wallet-sdk instead
 func (t *EntityClient) CreateEntity(header http.Header, body *structs.EntityBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("POST", "/v2/entities")
 	r.SetHeaders(header)
@@ -72,6 +74,7 @@ func (t *EntityClient) CreateEntity(header http.Header, body *structs.EntityBody
 //     TransactionIds: blockchain transaction id list, this api returns one transaction id
 //   err: create entity succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated
 func (t *EntityClient) UpdateEntity(header http.Header, id string, body *structs.EntityBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("PUT", "/v2/entities/"+id)
 	r.SetHeaders(header)
@@ -100,6 +103,7 @@ func (t *EntityClient) UpdateEntity(header http.Header, id string, body *structs
 //   payload: return entity payload if succ
 //   err: create entity succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use GetWalletInfo in wallet-sdk instead
 func (t *EntityClient) QueryEntity(header http.Header, id string) (payload *structs.EntityPayload, err error) {
 	// Build request
 	r := t.c.NewRequest("GET", "/v2/entities/"+id)
