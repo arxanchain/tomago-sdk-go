@@ -28,6 +28,7 @@ import (
 )
 
 // AssetClient asset client struct
+// Deprecated: This Client has been deprecated, use poe in wallet-sdk instead
 type AssetClient struct {
 	c *restapi.Client
 }
@@ -41,6 +42,7 @@ type AssetClient struct {
 //     TransactionIds: blockchain transaction id list, this api returns one transaction id
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use CreatePOE in wallet-sdk instead
 func (t *AssetClient) CreateAsset(header http.Header, body *structs.AssetBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("POST", "/v2/assets")
 	r.SetHeaders(header)
@@ -72,6 +74,7 @@ func (t *AssetClient) CreateAsset(header http.Header, body *structs.AssetBody) (
 //     TransactionIds: blockchain transaction id list, this api returns one transaction id
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use UpdatePOE in wallet-sdk instead
 func (t *AssetClient) UpdateAsset(header http.Header, id string, body *structs.AssetBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("PUT", "/v2/assets/"+id)
 	r.SetHeaders(header)
@@ -99,6 +102,7 @@ func (t *AssetClient) UpdateAsset(header http.Header, id string, body *structs.A
 //   payload: return asset payload if succ
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use QueryPOE in wallet-sdk instead
 func (t *AssetClient) QueryAsset(header http.Header, id string) (payload *structs.AssetPayload, err error) {
 	// Build request
 	r := t.c.NewRequest("GET", "/v2/assets/"+id)
@@ -144,6 +148,7 @@ func (t *AssetClient) QueryAsset(header http.Header, id string) (payload *struct
 //     TransactionIds: blockchain transaction id list
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use TransferAsset in wallet-sdk instead
 func (t *AssetClient) TransferAsset(header http.Header, body *structs.TransferAssetBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("POST", "/v2/assets/transfer")
 	r.SetHeaders(header)

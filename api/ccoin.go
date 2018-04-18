@@ -26,6 +26,7 @@ import (
 )
 
 // CCoinClient colored coin client struct
+// Deprecated: This Client has been deprecated, use colored token in wallet-sdk instead
 type CCoinClient struct {
 	c *restapi.Client
 }
@@ -38,6 +39,7 @@ type CCoinClient struct {
 //     TransactionIds: blockchain transaction id list, this api returns one transaction id
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use IssueCToken in wallet-sdk instead
 func (t *CCoinClient) Issue(header http.Header, body *structs.IssueBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("POST", "/v2/coins/issue")
 	r.SetHeaders(header)
@@ -69,6 +71,7 @@ func (t *CCoinClient) Issue(header http.Header, body *structs.IssueBody) (result
 //     TransactionIds: blockchain transaction id list, this api returns one transaction id
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use TransferCToken in wallet-sdk instead
 func (t *CCoinClient) Transfer(header http.Header, body *structs.TransferBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("POST", "/v2/coins/transfer")
 	r.SetHeaders(header)
@@ -100,6 +103,7 @@ func (t *CCoinClient) Transfer(header http.Header, body *structs.TransferBody) (
 //     TransactionIds: blockchain transaction id list
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated, use TransferCToken in wallet-sdk instead
 func (t *CCoinClient) Rollback(header http.Header, body *structs.RollbackBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("POST", "/v2/coins/rollback")
 	r.SetHeaders(header)
@@ -131,6 +135,7 @@ func (t *CCoinClient) Rollback(header http.Header, body *structs.RollbackBody) (
 //     TransactionIds: blockchain transaction id list
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated
 func (t *CCoinClient) Interest(header http.Header, body *structs.InterestBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("POST", "/v2/coins/interest")
 	r.SetHeaders(header)
@@ -162,6 +167,7 @@ func (t *CCoinClient) Interest(header http.Header, body *structs.InterestBody) (
 //     TransactionIds: blockchain transaction id list, this api returns one transaction id
 //   err: create asset succ, return nil; others return non-nil.
 //
+// Deprecated: This function has been deprecated
 func (t *CCoinClient) Withdraw(header http.Header, body *structs.WithdrawBody) (result *structs.TomagoResponse, err error) {
 	r := t.c.NewRequest("POST", "/v2/coins/withdraw")
 	r.SetHeaders(header)
