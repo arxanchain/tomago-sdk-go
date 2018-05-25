@@ -20,7 +20,7 @@ import (
 	"fmt"
 
 	restapi "github.com/arxanchain/sdk-go-common/rest/api"
-	"github.com/arxanchain/sdk-go-common/structs"
+	structs "github.com/arxanchain/sdk-go-common/structs/tomago"
 )
 
 // TomagoClient tomago client struct
