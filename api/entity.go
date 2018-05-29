@@ -24,7 +24,7 @@ import (
 	cerr "github.com/arxanchain/sdk-go-common/errors"
 	"github.com/arxanchain/sdk-go-common/rest"
 	restapi "github.com/arxanchain/sdk-go-common/rest/api"
-	"github.com/arxanchain/sdk-go-common/structs"
+	structs "github.com/arxanchain/sdk-go-common/structs/tomago"
 )
 
 // EntityClient entity client struct
