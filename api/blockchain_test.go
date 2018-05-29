@@ -22,7 +22,7 @@ import (
 
 	"github.com/arxanchain/sdk-go-common/rest"
 	"github.com/arxanchain/sdk-go-common/rest/api"
-	"github.com/arxanchain/sdk-go-common/structs"
+	structs "github.com/arxanchain/sdk-go-common/structs/tomago"
 	gock "gopkg.in/h2non/gock.v1"
 )
 
