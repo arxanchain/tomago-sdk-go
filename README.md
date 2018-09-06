@@ -6,16 +6,11 @@
 
 # tomago-sdk-go
 
-Tomago is a project code name, which is used to wrap SmartContract invocation
-from the business point of view, including APIs for asset owner (entity)
-management, digital assets, etc. You need not care about how the backend
-blockchain runs or the unintelligible techniques, such as consensus, endorsement
-and decentralization. Simply use the SDK we provide to implement your business
-logics, we will handle the caching, tagging, compressing, encrypting and high
-availability.
-
-We also provide a way from this SDK to invoke the SmartContract, a.k.a.
-Chaincode, which is deployed by yourself.
+Tomago is a project code name, which is used to invoke the Smartcontract whic is
+deployed by yourself. You need not care about how the backend blockchain runs or 
+the unintelligible techniques, such as consensus, endorsement and decentralization. 
+Simply use the SDK we provide to implement your business logics, we will handle 
+the caching, tagging, compressing, encrypting and high availability.
 
 This SDK enables Go developers to develop applications that interact with the
 SmartContract which is deployed out of the box or by yourself in the ArxanChain
@@ -55,7 +50,7 @@ cryptoConfig := &api.CryptoConfig{
 }
 
 config := &api.Config{
-    Address:    "http://127.0.0.1:8003",
+    Address:    "http://<API-Gateway-IP>:<Port>",
     ApiKey: "6fD9G0QpM1516158053",
     CryptoCfg cryptoConfig,
 }
@@ -122,11 +117,3 @@ use following APIs to invoke or query your chaincode.
   //do query blockchain
   resp, err := chaincodeClient.Query(header, reqBody)
   ```
-
-## Issue digital assets
-
-Deprecated, asset mgmt related APIs have been moved into wallet-sdk-go
-
-## Colored Coin
-
-Deprecated, colored coin has been moved into wallet-sdk-go

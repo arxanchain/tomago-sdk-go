@@ -26,9 +26,6 @@ import (
 // TomagoClient tomago client struct
 type TomagoClient struct {
 	c                *restapi.Client
-	entityClient     *EntityClient
-	assetClient      *AssetClient
-	ccoinClient      *CCoinClient
 	blockchainClient *BlockchainClient
 }
 
@@ -46,30 +43,6 @@ func NewTomagoClient(config *restapi.Config) (*TomagoClient, error) {
 		return nil, err
 	}
 	return &TomagoClient{c: c}, nil
-}
-
-// GetEntityClient Get entity client
-func (t *TomagoClient) GetEntityClient() structs.IEntityClient {
-	if t.entityClient == nil {
-		t.entityClient = &EntityClient{c: t.c}
-	}
-	return t.entityClient
-}
-
-// GetAssetClient Get asset client
-func (t *TomagoClient) GetAssetClient() structs.IAssetClient {
-	if t.assetClient == nil {
-		t.assetClient = &AssetClient{c: t.c}
-	}
-	return t.assetClient
-}
-
-// GetCCoinClient Get colored coin client
-func (t *TomagoClient) GetCCoinClient() structs.ICCoinClient {
-	if t.ccoinClient == nil {
-		t.ccoinClient = &CCoinClient{c: t.c}
-	}
-	return t.ccoinClient
 }
 
 // GetBlockchainClient Get blockchain client
