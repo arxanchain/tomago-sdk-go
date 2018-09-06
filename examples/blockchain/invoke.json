@@ -1,0 +1,7 @@
+{
+    "payload": {
+        "channel": "pubchain",
+        "chaincode_id": "pubchain-mycc",
+        "args": ["invoke", "a", "b", "1"]
+    }
+}
