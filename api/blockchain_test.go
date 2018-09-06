@@ -46,7 +46,7 @@ func initBlockchainClient(t *testing.T) {
 	chaincodeClient = tomagoClient.GetBlockchainClient()
 }
 
-func TestInvokeAssetSucc(t *testing.T) {
+func TestInvokeSucc(t *testing.T) {
 	//init gock & assetclient
 	initBlockchainClient(t)
 	defer gock.Off()
@@ -91,7 +91,7 @@ func TestInvokeAssetSucc(t *testing.T) {
 	}
 }
 
-func TestInvokeAssetFail(t *testing.T) {
+func TestInvokeFail(t *testing.T) {
 	//init gock & assetclient
 	initBlockchainClient(t)
 	defer gock.Off()
