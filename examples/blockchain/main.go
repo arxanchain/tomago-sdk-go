@@ -22,9 +22,14 @@ func main() {
 
 	// Create tomago client
 	config := restapi.Config{
-		Address:     "http://172.16.12.21:8003",
-		ApiKey:      "c7XprqTHM1523152892",
+		Address:     "https://remotehost.com:443",
+		ApiKey:      "Mc31HANHp1541501752",
 		CallbackUrl: "http://172.16.12.21:18091/v1/test",
+		TLSConfig: restapi.TLSConfig{
+			CAFile:   "./ca.crt",
+			KeyFile:  "./Mc31HANHp1541501752.key",
+			CertFile: "./Mc31HANHp1541501752.pem",
+		},
 	}
 
 	tomagoClient, err = tomagoapi.NewTomagoClient(&config)

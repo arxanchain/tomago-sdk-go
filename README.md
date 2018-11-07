@@ -6,7 +6,7 @@
 
 # tomago-sdk-go
 
-Tomago is a project code name, which is used to invoke the Smartcontract whic is
+Tomago is a project code name, which is used to invoke the Smartcontract which is
 deployed by yourself. You need not care about how the backend blockchain runs or 
 the unintelligible techniques, such as consensus, endorsement and decentralization. 
 Simply use the SDK we provide to implement your business logics, we will handle 
@@ -29,41 +29,38 @@ go get github.com/arxanchain/tomago-sdk-go/api
 ## Request APIKey and download certificates
 
 Before using the Tomago SDK Client, you need to request an ApiKey and download
-the certificates from ArxanChain BaaS ChainConsole for data encryption and
-signing. This will help ensure the data cannot be tampered with or illegally
-accessed to even if the client communicates with Tomago service via HTTPS.
+the certificates from ArxanChain BaaS ChainConsole for communicating with 
+Tomago service via HTTPS protocol.
 
 The certificates include:
 
-* The public key of ArxanChain BaaS Platform (server.crt) which is used to
-  encrypt the data sent to Tomago service. You can download it from the
-  ArxanChain BaaS ChainConsole -> System Management -> API Certs Management
-* The private key of the client user (`ApiKey`.key) which is used to sign the
-  data. You can download it when you create an API Certificate.
+* The root CA (ca.crt). You can download it from the ArxanChain BaaS ChainConsole
+  -> System Management -> Root CA Certs Management
+* The private key and cert of the client user (`ApiKey.key` and `ApiKey.pem`), and 
+  they are compressed into a ZIP-file. You can download it when you create an API
+  Certificate.
 
 ## Create Tomago Client
 
 ```code
-cryptoConfig := &api.CryptoConfig{
-    Enable:         true,
-    CertsStorePath: "./certs",
+tlsConfig := &api.TLSCfonfig{
+    CAFile: "/path/to/tls/ca/cert",
+    KeyFile: "/path/to/tls/user/key",
+    CertFile: "/path/to/tls/user/cert",
 }
 
 config := &api.Config{
-    Address:    "http://<API-Gateway-IP>:<Port>",
+    Address:    "https://<API-Gateway-DomainName>:<Port>",
     ApiKey: "6fD9G0QpM1516158053",
-    CryptoCfg cryptoConfig,
+    TLSConfig: tlsConfig,
 }
 
 tomagoClient, err := NewTomagoClient(config)
 ```
 
-* Enable - Whether encrypted communication is enabled between the client and
-  the server
-* CertsStorePath - The directory where the public key and the private key are
-  kept, e.g. `server.crt` and `6fD9G0QpM1516158053.key`.
-* Address - The Tomago Service API URL, we support http and https both
-* ApiKey - We assume the ApiKey for your request is "6fD9G0QpM1516158053"
+* **Address** - The BaaS Service DomainName with `https` prefix
+* **ApiKey** - The API access key on `ChainConsole` management page
+* **TLSConfig** - The real TLS configuration.
 
 ## Invoke the SmartContract deployed by yourself
 
